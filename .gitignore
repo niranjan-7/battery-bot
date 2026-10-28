@@ -1,0 +1,20 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+*.env
+
+# Python build and cache artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.bak
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Logs and runtime dumps
+*.log
+.pm2/
