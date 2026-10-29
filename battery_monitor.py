@@ -118,8 +118,19 @@ def send_ntfy(message, title="Nothing Phone (1) Battery", priority="default", ta
         print(f"Error sending ntfy notification: {e}")
 
 
+def acquire_wake_lock():
+    """Acquires Termux CPU wake-lock so the daemon runs continuously when the screen is off."""
+    try:
+        subprocess.run(["termux-wake-lock"], check=False, timeout=5)
+        print("Acquired Termux CPU wake-lock (prevents Android sleep).")
+    except Exception as e:
+        print(f"Warning: Could not acquire Termux wake-lock: {e}")
+
+
 def main():
     global charging_started_at, last_on_webhook_time, last_critical_alert_time
+
+    acquire_wake_lock()
 
     print("Nothing Phone (1) Battery Monitor & Auto-Charging Daemon started.")
     print(f"Polling every {CHECK_INTERVAL}s | ON threshold < {LOW_BATTERY_THRESHOLD}% | OFF threshold >= {FULL_BATTERY_THRESHOLD}%")
